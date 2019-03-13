@@ -1,0 +1,118 @@
+{
+	"info": {
+		"_postman_id": "574e14c0-7b4b-4acd-be82-b99225efa4fe",
+		"name": "Collection1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET",
+			"item": [
+				{
+					"name": "Getuser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7c901367-c272-4b97-a158-485945b72ac5",
+								"exec": [
+									"console.log(\" Hello World\");",
+									"",
+									"let urlVar = pm.variables.get(\"url\");",
+									"console.log(\"Value of the variable is : \"+urlVar);",
+									"",
+									"pm.variables.set(\"name\",\"POSTMAN\");",
+									"console.log(pm.variables.get(\"name\"));",
+									"",
+									"let globalVar = pm.globals.get(\"Environment \");",
+									"console.log(globalVar);",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/users/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetListofusers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/users?page=2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "77317ffa-976d-4de8-bbda-072c2b4d1215",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "d9342d21-0105-48a6-866d-efd64e9acc71",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "2958be75-525f-424a-a302-d95edfa9353b",
+			"key": "url",
+			"value": "https://reqres.in",
+			"type": "string"
+		}
+	]
+}
