@@ -1,0 +1,144 @@
+# This is the SAM template for deploying the lambdas.
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: SAM Template for deploying all lambdas
+Parameters: 
+  Author:
+    Type: String
+    Description: Author of this Lambda.
+  LambdaRoleArn:
+    Type: String
+    Description: Lambda role ARN to be used for all lambdas
+  StateMachineARN:
+    Type: String
+    Description: Lambda role ARN to be used for all lambdas
+Resources:
+  UploadToS3Lambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.handler
+      Runtime: nodejs6.10
+      CodeUri: ../../lambdas/fetch-s3-data/fetch-s3-data.zip
+      Role: !Ref LambdaRoleArn
+      FunctionName: fetch-s3-data
+      Timeout: 120
+      MemorySize: 128
+      Environment:
+        Variables:
+          Author: !Ref Author
+      Tags:
+        project: aws-serverless-demo
+        type: lambda
+  DeleteFromS3Lambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.handler
+      Runtime: nodejs6.10
+      CodeUri: ../../lambdas/clean-s3-data/clean-s3-data.zip
+      Role: !Ref LambdaRoleArn
+      FunctionName: clean-s3-data
+      Timeout: 120
+      MemorySize: 128
+      Environment:
+        Variables:
+          Author: !Ref Author
+      Tags:
+        project: aws-serverless-demo
+        type: lambda
+  StartStepFunc:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.handler
+      Runtime: nodejs6.10
+      CodeUri: ../../lambdas/start-step-func/start-step-func.zip
+      Role: !Ref LambdaRoleArn
+      FunctionName: start-step-func
+      Timeout: 120
+      MemorySize: 128
+      Environment:
+        Variables:
+          Author: !Ref Author
+          STATE_MACHINE_ARN: !Ref StateMachineARN
+      Tags:
+        project: aws-serverless-demo
+        type: lambda
+  EvalUpload:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.handler
+      Runtime: nodejs6.10
+      CodeUri: ../../lambdas/eval-upload/eval-upload.zip
+      Role: !Ref LambdaRoleArn
+      FunctionName: eval-upload
+      Timeout: 120
+      MemorySize: 128
+      Environment:
+        Variables:
+          Author: !Ref Author
+      Tags:
+        project: aws-serverless-demo
+        type: lambda
+  ProcessJpg:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.handler
+      Runtime: nodejs6.10
+      CodeUri: ../../lambdas/process-jpg/process-jpg.zip
+      Role: !Ref LambdaRoleArn
+      FunctionName: process-jpg
+      Timeout: 120
+      MemorySize: 128
+      Environment:
+        Variables:
+          Author: !Ref Author
+      Tags:
+        project: aws-serverless-demo
+        type: lambda
+  ProcessPng:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.handler
+      Runtime: nodejs6.10
+      CodeUri: ../../lambdas/process-png/process-png.zip
+      Role: !Ref LambdaRoleArn
+      FunctionName: process-png
+      Timeout: 120
+      MemorySize: 128
+      Environment:
+        Variables:
+          Author: !Ref Author
+      Tags:
+        project: aws-serverless-demo
+        type: lambda
+  ProcessGif:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.handler
+      Runtime: nodejs6.10
+      CodeUri: ../../lambdas/process-gif/process-gif.zip
+      Role: !Ref LambdaRoleArn
+      FunctionName: process-gif
+      Timeout: 120
+      MemorySize: 128
+      Environment:
+        Variables:
+          Author: !Ref Author
+      Tags:
+        project: aws-serverless-demo
+        type: lambda
+  DoCleanup:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.handler
+      Runtime: nodejs6.10
+      CodeUri: ../../lambdas/post-process-cleanup/post-process-cleanup.zip
+      Role: !Ref LambdaRoleArn
+      FunctionName: post-process-cleanup
+      Timeout: 120
+      MemorySize: 128
+      Environment:
+        Variables:
+          Author: !Ref Author
+      Tags:
+        project: aws-serverless-demo
+        type: lambda

@@ -1,0 +1,7 @@
+{
+  "Parameters": {
+    "Author": "athakur",
+    "LambdaRoleArn": "arn:aws:iam::499222264523:role/lambdas3",
+    "StateMachineARN": "arn:aws:states:us-east-1:499222264523:stateMachine:aws-serverless-process-upload"
+  }
+}

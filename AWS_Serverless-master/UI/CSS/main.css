@@ -1,0 +1,29 @@
+.headerContainer {
+    height: 300px;
+    width: 100%;
+}
+
+.bannerImg{
+    max-height: 100%;
+    max-width: 100%;
+    width: inherit;
+}
+
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: yellow;
+    color: black;
+    text-align: center;
+}
+
+
+.error {
+    width: 100%;
+    background-color: yellow;
+    color: red;
+    text-align: center;
+}

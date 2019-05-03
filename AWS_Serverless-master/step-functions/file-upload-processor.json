@@ -1,0 +1,140 @@
+{
+  "Comment": "Processes File uploaded to S3 in AWS serverless demo",
+  "StartAt": "EvalUpload",
+  "States": {
+    "EvalUpload": {
+      "Type": "Task",
+      "Comment": "Evaluates uploaded files to S3",
+      "InputPath": "$",
+      "ResultPath": "$.result",
+      "Resource": "arn:aws:lambda:us-east-1:499222264523:function:eval-upload",
+      "Next": "ProcessAllFileTypes",
+      "Retry": [
+        {
+          "ErrorEquals": [
+            "States.ALL"
+          ],
+          "IntervalSeconds": 30,
+          "MaxAttempts": 1
+        }
+      ]
+    },
+    "ProcessAllFileTypes": {
+      "Type": "Parallel",
+      "Comment": "Process different file types separately",
+      "Branches": [
+        {
+          "StartAt": "ProcessJpgFileChoice",
+          "States": {
+            "ProcessJpgFileChoice": {
+              "Type": "Choice",
+              "Choices": [
+                {
+                  "Variable": "$.result.isJpg",
+                  "BooleanEquals": true,
+                  "Next": "ProcessJpgFile"
+                },
+                {
+                  "Variable": "$.result.isJpg",
+                  "BooleanEquals": false,
+                  "Next": "DoneJpg"
+                }
+              ]
+            },
+            "ProcessJpgFile" : {
+              "Type": "Task",
+              "Comment": "Processes JPG file",
+              "InputPath": "$",
+              "ResultPath": "$",
+              "Resource": "arn:aws:lambda:us-east-1:499222264523:function:process-jpg",
+              "End": true
+            },
+            "DoneJpg": {
+              "Type": "Succeed"
+            }
+          }
+        },
+        {
+          "StartAt": "ProcessPngFileChoice",
+          "States": {
+            "ProcessPngFileChoice": {
+              "Type": "Choice",
+              "Choices": [
+                {
+                  "Variable": "$.result.isPng",
+                  "BooleanEquals": true,
+                  "Next": "ProcessPngFile"
+                },
+                {
+                  "Variable": "$.result.isPng",
+                  "BooleanEquals": false,
+                  "Next": "DonePng"
+                }
+              ]
+            },
+            "ProcessPngFile" : {
+              "Type": "Task",
+              "Comment": "Processes Png file",
+              "InputPath": "$",
+              "ResultPath": "$",
+              "Resource": "arn:aws:lambda:us-east-1:499222264523:function:process-png",
+              "End": true
+            },
+            "DonePng": {
+              "Type": "Succeed"
+            }
+          }
+        },
+        {
+          "StartAt": "ProcessGifFileChoice",
+          "States": {
+            "ProcessGifFileChoice": {
+              "Type": "Choice",
+              "Choices": [
+                {
+                  "Variable": "$.result.isGif",
+                  "BooleanEquals": true,
+                  "Next": "ProcessGifFile"
+                },
+                {
+                  "Variable": "$.result.isGif",
+                  "BooleanEquals": false,
+                  "Next": "DoneGif"
+                }
+              ]
+            },
+            "ProcessGifFile" : {
+              "Type": "Task",
+              "Comment": "Processes Gif file",
+              "InputPath": "$",
+              "ResultPath": "$",
+              "Resource": "arn:aws:lambda:us-east-1:499222264523:function:process-gif",
+              "End": true
+            },
+            "DoneGif": {
+              "Type": "Succeed"
+            }
+          }
+        }       
+      ],
+      "Next": "DoCleanup",
+      "InputPath": "$"
+    },
+    "DoCleanup": {
+      "Type": "Task",
+      "Comment": "Do post processing cleanup if any",
+      "InputPath": "$",
+      "Resource": "arn:aws:lambda:us-east-1:499222264523:function:post-process-cleanup",
+      "Retry": [
+        {
+          "ErrorEquals": [
+            "States.ALL"
+          ],
+          "IntervalSeconds": 30,
+          "MaxAttempts": 1
+        }
+      ],
+      "End": true
+    }
+  }
+}

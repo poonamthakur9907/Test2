@@ -1,0 +1,47 @@
+<html>
+    <head>
+        <title>AWS Serverless Web App</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="../CSS/main.css"/>
+        <script src="../SCRIPTS/main.js"></script>
+        
+    </head>
+    <body onload="onloadFunc()" style="overflow:scroll; height:100%;">
+        <div class="headerContainer">
+            <img src="../ASSETS/banner.png" class="bannerImg"></div>
+        </div>
+
+        <br/>
+        <hr/>
+
+        <div class="error" id ="errorDiv"></div>
+
+        <!--
+        <h1>Upload Your Images</h1>
+
+        <form id="uploadImgForm" enctype="multipart/form-data" method="PUT" action="#">
+            <input id="imgFileuploadInput" name="imgFile" type="file" />
+            <br/>
+            <button id="uploadImgButton" onClick="uploadImg()" type="button">Upload</button>
+        </form>
+
+         <hr/>
+        -->
+
+         <h1>Get Image List</h1>
+         <br/>
+         <div id="imgListDiv" style="overflow:scroll; height:300px;">
+
+         </div>
+         <br/>
+         <button id="getFileListButton" onclick="fetchImgList()">Fetch List</button>
+
+         <hr/>
+
+        <div class="footer">
+            <p>Copyright by Aniket Thakur 2018.</p>
+        </div>
+
+
+    </body>
+</html>
